@@ -1,42 +1,7 @@
-//! SigmaOS-lighttpd - SigmaOS Component
-//!
-//! Web, monitoring, and security component for SigmaOS.
+//! SigmaOS-lighttpd — utility model.
 
-use anyhow::Result;
-use log::info;
-use serde::{Deserialize, Serialize};
+pub mod util;
+pub mod options;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Config {
-    pub enabled: bool,
-    pub production_mode: bool,
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self { enabled: true, production_mode: false }
-    }
-}
-
-pub struct lighttpd {
-    config: Config,
-}
-
-impl lighttpd {
-    pub fn new(config: Config) -> Self {
-        Self { config }
-    }
-
-    pub fn initialize(&mut self) -> Result<()> {
-        info!("Initializing SigmaOS-lighttpd");
-        if self.config.production_mode {
-            info!("Production mode enabled");
-        }
-        Ok(())
-    }
-
-    pub fn start(&mut self) -> Result<()> {
-        info!("Starting SigmaOS-lighttpd");
-        Ok(())
-    }
-}
+pub use util::Model;
+pub use options::{Mode, Options};
